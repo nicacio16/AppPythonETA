@@ -1,0 +1,114 @@
+<!-- Vamos extender o template base -->
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="col-lg-12 mb-4">
+
+  <!-- Illustrations -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary "><a href="{% url 'contato' %}">Sobre</a></h6>
+    </div>
+    <div class="card-body">
+      <div class="text-center">
+        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4"  src="/static/img/ifpr_logo.jpg" >
+    </div>
+
+    <div class="text-center">
+      <p><h4><b>
+          SIPEN 2019 - Seminário de Integração das Pesquisas do Núcleo Básico
+          <br>
+          Crise e Ecologia: Desafios Contemporâneos
+          <br>
+          08 e 09 de abril de 2019 - IFPR - Paranavaí - PR
+      </b></h4></p>
+      <p><h3><b>
+        <br>
+          RESUMO
+        <br>
+        <br>
+      </b></h3></p>
+    </div>
+
+      <div class="text-center">
+        <b>Diego Nicácio Santos da Silva¹</b> – nicacio16@hotmail.com
+        <br>
+        <b>Alexandre da Silva Avincola¹</b> – alexandre.avincola@ifpr.edu.br
+        <br>
+        <b>Daniela Eloise Flôr¹ (orientadora)</b> – daniela.flor@ifpr.edu.br
+        <br>
+
+      <div class="text-center">
+        <p><h5><b>PROTÓTIPO DIDÁTICO PARA ESTAÇÃO DE TRATAMENTO DE ÁGUA DA CHUVA</b></h5></p>
+      </div>
+
+      <div class="text-justify">
+      <p>
+        Apesar de grande parte da superfície terrestre estar coberta por água, somente 1% deste recurso
+        é considerada água doce, e uma pequena parcela desta é usada para abastecimento de cidades,
+        indústrias e agricultura. A literatura relata que o desperdício de água potável, associado ao
+         processo de industrialização e urbanização trazem sérias consequências ao meio ambiente, dentre
+          elas podemos citar duas: escassez de água e desastres naturais. Por outro lado, estudos revelam
+           que a captação e armazenamento das águas de chuvas para reuso é uma solução alternativa para
+           parte dos problemas apresentados, logo em decorrência, reduzir o volume hídrico escorrendo pelas
+            ruas e redes de águas pluviais, menor exploração de água potável nas indústrias – que muitas
+            vezes tem um destino pouco nobre para água - além da economia que pode ser gerada com a redução
+            no consumo de água distribuído pelas concessionárias. A prototipação de hardware livre tem sido
+             uma excelente ferramenta para auxiliar pesquisadores a desenvolver projetos nas mais variadas
+             áreas. Por meio de microcontroladores, módulos, sensores e outros componentes relacionados,
+              pode-se construir um protótipo, testar o funcionamento do sistema e extrair resultados para
+              respaldar a pesquisa. Desta forma, considerando o reaproveitamento hídrico pluvial como
+              importante passo para o desenvolvimento sustentável e sua ampla disponibilidade, propõe-se o
+              desenvolvimento de um protótipo para uma estação de tratamento de águas da chuva.
+               O sistema deve ser composto por um conjunto de componentes de hardware, programação lógica,
+                comunicação entre os módulos,  filtragem e dosador. O escopo do projeto é a capacidade de
+                conduzir a água captada para o filtro, fazer a dosagem de cloro, e em seguida abastecer a
+                 caixa d’água predial para a distribuição na rede hidráulica com destinação mais nobre,
+                 e também, minimizar a necessidade de interferência humana no processo. Para fundamentar
+                 o trabalho, além da literatura, uma equipe de especialistas do IFPR Campus Paranavaí
+                 fará análises físico-químicas em amostras da água filtrada. Ao final, espera-se avaliar a
+                  eficiência do protótipo no tratamento da água captada.
+                  <br>
+                  <b>Palavras-chaves:</b>  Arduino, protótipo, automatização, água de chuva, ETA.
+      </p>
+      <p>
+        Referências bibliográficas disponíveis:
+        <br>
+
+MIORANDO, Taizi; BRIAO, Vandré Barbosa; GIRARDELLI, Laisa. Potabilização de água da chuva por ultrafiltração. Eng. Sanit. Ambient.,  Rio de Janeiro ,  v. 22, n. 3, p. 481-490,  May  2017 .   Available from <http://www.scielo.br/scielo.php?script=sci_arttext&pid=S1413-41522017000300481&lng=en&nrm=iso>. access on  22  Feb.  2019.  http://dx.doi.org/10.1590/s1413-41522017146765.
+
+GONDIM, Rubens Sonsol. Difusão da captação de água de chuvas no financiamento rural. Ambiente de Políticas de Desenvolvimento do Banco do Nordeste, Fortaleza, 2001.
+
+MAY, Simone. Caracterização, tratamento e reuso de águas cinzas e aproveitamento de águas pluviais em edificações. Tese (Doutorado em Engenharia Hidráulica e Sanitária) Escola Politécnica da Universidade de São Paulo. São Paulo, 2009.
+
+JAQUES, Reginaldo Campolino et al. Qualidade da água de chuva no município de Florianópolis e sua potencialidade para aproveitamento em edificações, 2005.
+
+Brasil. Fundação Nacional de Saúde. Manual prático de análise de água / Fundação Nacional de Saúde – 4. ed. – Brasília : Funasa, 2013.
+
+Instituto Nacional de Meteorologia (INMET) Disponível em: http://www.inmet.gov.br/sim/abre_graficos.php.
+
+Arduino. (2018) Language Reference,<https://www.arduino.cc/reference/en/> Acessado em: Fevereiro de 2019.
+
+BRASIL, Portaria Nº 2.914, de 12 de dezembro de 2011. Dispõe sobre os procedimentos de controle e de vigilância da qualidade da água para consumo humano e seu padrão de potabilidade. Brasília, DF, dez 2011.
+      </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="col-lg-12 mb-4">
+
+  <!-- Illustrations -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary "><a href="{% url 'contato' %}">Diagrama de Classe</a></h6>
+    </div>
+    <div class="card-body">
+      <div class="text-center">
+        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4"  src="/static/img/diagramaClasse.jpeg" >
+    </div>
+  </div>
+
+</div>
+{% endblock %}

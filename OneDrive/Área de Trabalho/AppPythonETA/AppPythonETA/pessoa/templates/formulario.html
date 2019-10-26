@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+<!-- Carrega o plugin do form com bs4 -->
+{% load crispy_forms_tags %}
+
+
+{% block header %}
+
+{% endblock %}
+
+{% block main %}
+
+<div class="container py-5">
+
+    <div class="row mt-5">
+        <div class="col-lg">
+            <h3>{{ titulo }}</h3>
+
+            {% if botao == 'Excluir' %}
+            <hr>
+            <h4 class="font-weight-normal">Registro a excluir: {{ object }}</h4>
+            <hr>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-5">
+
+            <form method="post">
+
+                <!-- Todo formulário tem que ter essa validação -->
+                {% csrf_token %}
+
+                <!-- Gera o formulário -->
+                {{ form|crispy }}
+
+                <!-- Cria um botão para submeter o form e outro para voltar -->
+                <button type="submit" class="btn {{ classeBotao }}">
+                    {{ botao }}
+                </button>
+
+                <a href="{% url 'index' %}" class="btn btn-secondary">
+                    Voltar
+                </a>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
