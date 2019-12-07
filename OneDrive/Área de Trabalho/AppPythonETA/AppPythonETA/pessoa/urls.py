@@ -26,9 +26,9 @@ path('excluir/cidade/<int:pk>/', CidadeDelete.as_view(), name="excluir-cidade"),
 path('listar/cidade/', CidadeList.as_view(), name="listar-cidades"),
 
 # URLS de Pessoa
-path('cadastrar/pessoa/', PessoaCreate.as_view(), name="cadastrar-pessoa"),
+# path('cadastrar/pessoa/', PessoaCreate.as_view(), name="cadastrar-pessoa"),
 path('editar/pessoa/<int:pk>/', PessoaUpdate.as_view(), name="editar-pessoa"),
-path('excluir/pessoa/<int:pk>/', PessoaDelete.as_view(), name="excluir-pessoa"),
+# path('excluir/pessoa/<int:pk>/', PessoaDelete.as_view(), name="excluir-pessoa"),
 path('listar/pessoa/', PessoaList.as_view(), name="listar-pessoas"),
 
 # URLS de Tipo de Estação

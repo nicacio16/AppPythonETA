@@ -23,9 +23,8 @@ from django.views.generic.list import ListView
 # Método que busca um objeto. Se não existir, da um erro 404
 from django.shortcuts import get_object_or_404
 
-
-
-
+# Importa o DetailView para ver detalhes de objetos
+from django.views.generic.detail import DetailView
 
 # Create your views here.
 
@@ -43,7 +42,31 @@ class PaginaInicialView(TemplateView):
             # Chamar o "pai" para que sempre tenha o comportamento padrão, além do nosso
             context = super(PaginaInicialView, self).get_context_data(
                 *args, **kwargs)
-            context['ultimos_lancamentos'] = Estacao.objects.all().reverse()[0:10]
+
+            if self.request.user.is_authenticated: 
+                estacoes = Estacao.objects.filter(usuario=self.request.user)
+                sensores = Sensor.objects.filter(usuario=self.request.user)
+            else:
+                sensores = Sensor.objects.all()
+                estacoes = Estacao.objects.all()
+
+            context['volume_agua'] = 0
+
+            for e in estacoes:
+                context['volume_agua'] += e.capacidade
+
+            context['quantidade_estacoes'] = estacoes.count()
+            context['quantidade_sensores_user'] = sensores.count()
+            
+            context['total_usuarios'] = Pessoa.objects.all().count()
+            context['total_agua_reuso'] = Estacao.objects.all().count()
+            context['total_comentarios'] = Estacao.objects.all().count()
+                        
+            context['umidade'] = Estacao.objects.all().count()*10
+            context['pressao'] = Estacao.objects.all().count()*10
+            context['velocidadeVento'] = Estacao.objects.all().count()*10
+            context['sensacaoTermica'] = Estacao.objects.all().count()*10
+            context['precipitacao'] =  Cidade.objects.all().count()*10
             return context
 
 # Página "Sobre"
@@ -120,25 +143,25 @@ class CidadeCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
         return context
     
 
-class PessoaCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
-    group_required = u"Usuário"
-    model = Pessoa
-    template_name = "formulario.html"
-    success_url = reverse_lazy("listar-pessoas")
-    fields = ['nome', 'nascimento', 'email', 'cidade']
+# class PessoaCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
+#     group_required = u"Usuário"
+#     model = Pessoa
+#     template_name = "formulario.html"
+#     success_url = reverse_lazy("listar-pessoas")
+#     fields = ['nome', 'nascimento', 'email', 'cidade']
 
-    # Método utilizado para enviar dados ao template
-    def get_context_data(self, *args, **kwargs):
-        context = super(PessoaCreate, self).get_context_data(*args, **kwargs)
-        context['titulo'] = "Cadastro de novos Usuários"
-        context['botao'] = "Cadastrar"
-        context['classeBotao'] = "btn-primary"
-        return context
+#     # Método utilizado para enviar dados ao template
+#     def get_context_data(self, *args, **kwargs):
+#         context = super(PessoaCreate, self).get_context_data(*args, **kwargs)
+#         context['titulo'] = "Cadastro de novos Usuários"
+#         context['botao'] = "Cadastrar"
+#         context['classeBotao'] = "btn-primary"
+#         return context
 
 
 class TipoEstacaoCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     group_required = u"Administrador"
-    model = Estacao
+    model = TipoEstacao
     template_name = "formulario.html"
     success_url = reverse_lazy("listar-tipo-estacao")
     fields = ['tipo']
@@ -166,7 +189,7 @@ class EstacaoCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     model = Estacao
     template_name = "formulario.html"
     success_url = reverse_lazy("listar-estacao")
-    fields = ['local', 'capacidade', 'cidade']
+    fields = ['local', 'capacidade', 'cidade', 'tipo']
     
     def form_valid(self, form):
 
@@ -230,7 +253,7 @@ class HistoricoConsumoCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView)
     # Método utilizado para enviar dados ao template
     def get_context_data(self, *args, **kwargs):
         context = super(HistoricoConsumoCreate, self).get_context_data(*args, **kwargs)
-        context['titulo'] = "Cadastro de Historico de Consumo"
+        context['titulo'] = "Cadastro de Histórico de Consumo"
         context['botao'] = "Cadastrar"
         context['classeBotao'] = "btn-primary"
         return context
@@ -424,18 +447,18 @@ class CidadeDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
         return context
 
 
-class PessoaDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
-    group_required = u"Administrador"
-    model = Pessoa
-    template_name = "formulario.html"
-    success_url = reverse_lazy("listar-pessoa")
+# class PessoaDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
+#     group_required = u"Administrador"
+#     model = Pessoa
+#     template_name = "formulario.html"
+#     success_url = reverse_lazy("listar-pessoa")
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(PessoaDelete, self).get_context_data(*args, **kwargs)
-        context['titulo'] = "Deseja excluir esse registro?"
-        context['botao'] = "Excluir"
-        context['classeBotao'] = "btn-danger"
-        return context
+#     def get_context_data(self, *args, **kwargs):
+#         context = super(PessoaDelete, self).get_context_data(*args, **kwargs)
+#         context['titulo'] = "Deseja excluir esse registro?"
+#         context['botao'] = "Excluir"
+#         context['classeBotao'] = "btn-danger"
+#         return context
 
 
 class TipoEstacaoDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
@@ -527,15 +550,16 @@ class HistoricoConsumoDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView)
 
 
 class EstadoList(GroupRequiredMixin, LoginRequiredMixin, ListView):
-    group_required = u"Usuário"
+    group_required = u"Administrador"
     # Inform qual o modelo
     model = Estado
     # E o template
     template_name = "listas/list_estado.html"
 
+    
 
 class CidadeList(GroupRequiredMixin, LoginRequiredMixin, ListView):
-    group_required = u"Usuário"
+    group_required = u"Administrador"
     model = Cidade
     template_name = "listas/list_cidade.html"
 
@@ -592,3 +616,36 @@ class HistoricoConsumoList(GroupRequiredMixin, LoginRequiredMixin, ListView):
         # O object_list é o nome padrão para armazenar uma lista de objetos de um ListView
         self.object_list = HistoricoConsumo.objects.filter(usuario=self.request.user)
         return self.object_list
+
+
+#################### Detalhar ######################
+
+class EstacaoDetalhes(DetailView):
+    # Define a classe do objeto a ser detalhado
+    model = Estacao
+    # Qual o template para essa tela
+    template_name = "detalhe/estacao.html"
+
+    # Está comentado porque neste caso não faz sentido... #
+    # Pegar somente se o animal for do usuário cadastrado
+    
+    def get_object(self, queryset=None):
+        # Busca somente o Animal com a pk da URL que pertence ao usuário
+        # Se o usuário tentar alguma pk diferente, vai dar página 404
+        self.object = get_object_or_404(Estacao, pk=self.kwargs['pk'], usuario=self.request.user,)
+        # Retorna o objeto que será enviado ao template
+        return self.object
+    
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        # Colocar mais coisas no context
+        # Por exemplo: fazer um filtro em outra classe que utiliza o ID (pk)
+        # do objeto que está sendo exibido, podemos fazer um filtro com ele...
+        # context['itens'] = ItensVenda.objects.filter(venda=self.object)
+
+        # self.object retorna o objeto da classe definida aqui no model = xxxx
+        # self.kwargs['pk'] retorna a pk que está lá na URL
+
+        return context

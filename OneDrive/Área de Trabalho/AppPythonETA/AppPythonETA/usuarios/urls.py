@@ -1,6 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
+from .views import UsuarioCreate
 
 urlpatterns = [
     # Aqui vão suas urls
@@ -14,6 +15,9 @@ urlpatterns = [
     ), name='login'),
 
     path('sair/', auth_views.LogoutView.as_view(), name="logout"),
+    path('regitrar/', UsuarioCreate.as_view(), name="registrar"),
+
+
 
     path('alterar-senha/', auth_views.PasswordChangeView.as_view(
         template_name='usuarios/form.html',
@@ -22,9 +26,8 @@ urlpatterns = [
             'botao': 'Alterar',
             'classe': 'btn-success'
             },
-        success_url=reverse_lazy('index')
+        success_url=reverse_lazy('login')
     ), name="alterar-senha"),
-
 
 
 ]

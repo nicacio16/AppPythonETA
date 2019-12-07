@@ -1,0 +1,45 @@
+{% extends 'adocao/base.html' %}
+
+{% load static %}
+
+<!-- Deixa o bloco vazio -->
+{% block header %}
+
+{% endblock %}
+
+<!-- Bloco Principal -->
+{% block container %}
+
+<div class="container py-5">
+    
+    <div class="row mt-5">
+        <div class="col-lg detalhes-estacao">
+            
+            <h3 class="border-bottom">
+                Detalhes da Estação
+            </h3>
+            <span><b>Cidade:</b></span>
+            <span>{{ object.cidade }}</span>
+            <br>
+
+            <span><b>Local:</b></span>
+            <span>{{ object.local }}</span>
+            <br>
+
+            <span><b>Tipo:</b></span>
+            <span>{{ object.tipo }}</span>
+            <br>
+
+            <span><b>Capacidade:</b></span>
+            <span>{{ object.capacidade }}</span>
+            <br>
+
+            <a href="{% url 'index' %}" class="d-inline-block mt-4">
+                <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                Voltar
+            </a>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
